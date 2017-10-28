@@ -15,3 +15,7 @@ AWS Secret Access Key [None]: ****************************************
 Default region name [None]: ap-northeast-1
 Default output format [None]:
 ```
+
+
+### Awesome AWS
+https://github.com/donnemartin/awesome-aws
