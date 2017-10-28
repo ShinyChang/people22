@@ -24,21 +24,6 @@ This is a game plan of training member to familiar with DevOps flow
 - week 3 intergate microservices (非同步 data sync)
 - week 4 take the new weapon go back to real world
 
-
-## AWS CLI Setup
-
-### Install the dependency package
-```
-brew install awscli
-brew install aws-shell
-```
-
-### Generate your owns aws access key in AWS IAM
-```
-$ aws-shell
-$ configure
-AWS Access Key ID [None]: ********************
-AWS Secret Access Key [None]: ****************************************
-Default region name [None]: ap-northeast-1
-Default output format [None]:
-```
+## Reference
+- [AWS](https://github.com/wys1203/people22/blob/master/aws.md)
+- [Drone]()
