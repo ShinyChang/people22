@@ -13,6 +13,7 @@
 3. 建立 Internet Gateway
 4. 建立 Route 榜 Gateway
 6. 設定 Domain
+6. 設定 SSH KEY
 6. 建立 EC2
 6. 透過 [userdata](https://github.com/wys1203/people22/blob/master/aws/userdata.sh)，預先安裝 docker & docker-compose
 7. Route53 榜 Instance
