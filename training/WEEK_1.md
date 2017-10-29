@@ -6,8 +6,7 @@
 ### References
 [docker-compose](https://docs.docker.com/compose/)
 
-## Ops: 
-### Step by step
+### Ops
 - [DroneCI事前登入](https://github.com/wys1203/people22/blob/master/drone/README.md)
 1. 建立 VPC
 2. 建立 Subnet
