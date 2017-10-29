@@ -26,4 +26,4 @@ This is a game plan of training member to familiar with DevOps flow
 
 ## Reference
 - [AWS](https://github.com/wys1203/people22/blob/master/aws.md)
-- [Drone]()
+- [Drone](http://docs.drone.io)

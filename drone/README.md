@@ -6,17 +6,17 @@
 ### Application name
 Drone (alpha)
 ### Homepage URL
-https://drone.slowstir.com 
+https://drone.expamle.com 
 ### Authorization callback URL
-https://drone.slowstir.com/authorize
+https://drone.expamle.com/authorize
 ```
 
 2. Copy your client token
 ```
 ### Client ID
-65f41926322819dda648
+***********************
 ### Client Secret
-e7d0daf8f11cc43ea109a7bf17611a9eda814f16
+**********************************************
 ```
 
 3. docker-compose.yml
@@ -34,10 +34,10 @@ services:
     restart: always
     environment:
       - DRONE_OPEN=true
-      - DRONE_HOST=https://drone.slowstir.com
+      - DRONE_HOST=https://drone.example.com
       - DRONE_GITHUB=true
-      - DRONE_GITHUB_CLIENT=65f41926322819dda648
-      - DRONE_GITHUB_SECRET=e7d0daf8f11cc43ea109a7bf17611a9eda814f16
+      - DRONE_GITHUB_CLIENT=***********************
+      - DRONE_GITHUB_SECRET=**********************************
       - DRONE_SECRET=DrONeSEcREt
 
   drone-agent:

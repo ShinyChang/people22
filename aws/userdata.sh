@@ -1,5 +1,5 @@
 #!/bin/sh
-export PATH=/usr/local/bin:/opt/aws/bin:$PATH;
+export PATH=/usr/local/bin:$PATH;
 
 yum update
 yum install docker -y
@@ -15,21 +15,24 @@ usermod -a -G docker ec2-user
 curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 chown root:docker /usr/local/bin/docker-compose
+export DRONE_HOST=https://drone.example.com
+export DRONE_GITHUB_CLIENT=********************
+export DRONE_GITHUB_SECRET=****************************************
 
-export DRONE_HOST=https://drone.slowstir.com
-export DRONE_GITHUB_CLIENT=65f41926322819dda648
-export DRONE_GITHUB_SECRET=e7d0daf8f11cc43ea109a7bf17611a9eda814f16
-
-
+# Generate Caddfile for launch caddy server
 cat <<EOF > /etc/Caddyfile
-https://drone.slowstir.com {
+drone.example.com {
   # please comment the timeouts configures
   # if caddy server version under 0.9.5
   timeouts none
-  proxy / drone-server:8000
+  proxy / drone-server:8000 {
+    websocket
+    transparent
+  }
 }
 EOF
 
+# Generate docker-compose for launch drone service
 cat <<EOF >/home/ec2-user/docker-compose.yml
 version: '2'
 
@@ -38,9 +41,10 @@ services:
     image: abiosoft/caddy
     ports:
       - 443:443
+      - 80:80
     volumes:
       - /etc/Caddyfile:/etc/Caddyfile
-      - $HOME/.caddy:/root/.caddy
+      - ${HOME}/.caddy:/root/.caddy
   drone-server:
     image: drone/drone:0.8
     ports:
@@ -56,10 +60,9 @@ services:
       - DRONE_GITHUB_CLIENT=${DRONE_GITHUB_CLIENT}
       - DRONE_GITHUB_SECRET=${DRONE_GITHUB_SECRET}
       - DRONE_SECRET=${HOSTNAME}
-
   drone-agent:
     image: drone/agent:0.8
-   restart: always
+    restart: always
     depends_on:
       - drone-server
     volumes:
@@ -69,4 +72,4 @@ services:
       - DRONE_SECRET=${HOSTNAME}
 EOF
 chown ec2-user:ec2-user /home/ec2-user/docker-compose.yml
-/usr/local/bin/docker-compose -f /home/ec2-user/docker-compose.yml up -d
+# /usr/local/bin/docker-compose -f /home/ec2-user/docker-compose.yml up -d
