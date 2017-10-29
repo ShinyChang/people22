@@ -16,13 +16,31 @@ curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compos
 chmod +x /usr/local/bin/docker-compose
 chown root:docker /usr/local/bin/docker-compose
 
-export DRONE_HOST=`ec2-metadata -v | awk '{print $2}'`
-export DRONE_GITHUB_CLIENT=
-export DRONE_GITHUB_SECRET=
+export DRONE_HOST=https://drone.slowstir.com
+export DRONE_GITHUB_CLIENT=65f41926322819dda648
+export DRONE_GITHUB_SECRET=e7d0daf8f11cc43ea109a7bf17611a9eda814f16
+
+
+cat <<EOF > /etc/Caddyfile
+https://drone.slowstir.com {
+  # please comment the timeouts configures
+  # if caddy server version under 0.9.5
+  timeouts none
+  proxy / drone-server:8000
+}
+EOF
+
 cat <<EOF >/home/ec2-user/docker-compose.yml
 version: '2'
 
 services:
+  caddy:
+    image: abiosoft/caddy
+    ports:
+      - 443:443
+    volumes:
+      - /etc/Caddyfile:/etc/Caddyfile
+      - $HOME/.caddy:/root/.caddy
   drone-server:
     image: drone/drone:0.8
     ports:
